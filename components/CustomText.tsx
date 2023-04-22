@@ -12,6 +12,5 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontFamily: "MusticaPro",
     color: COLORS.text,
-    flex: 1,
   },
 });

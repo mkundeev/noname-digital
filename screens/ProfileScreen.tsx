@@ -1,6 +1,7 @@
 import React from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { View, StyleSheet } from "react-native";
 import CustomText from "../components/CustomText";
+import CustomButton from "../components/CustomButton";
 import type { DrawerScreenProps } from "@react-navigation/drawer";
 import {
   MaineStackParamList,
@@ -25,16 +26,12 @@ export default function ProfileScreen({ navigation }: Props) {
       <CustomText style={styles.text}>
         Зареєструйстесь для створення власного кабінету
       </CustomText>
-      <TouchableOpacity
-        activeOpacity={0.8}
-        style={styles.btn}
+      <CustomButton
         onPress={() => {
-          console.log(1);
           navigation.navigate("AuthNav", { screen: "InputPhoneScreen" });
         }}
-      >
-        <CustomText style={styles.btnText}>Зареєструватись</CustomText>
-      </TouchableOpacity>
+        title="Зареєструватись"
+      />
     </View>
   );
 }
@@ -48,19 +45,6 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 15,
     borderTopLeftRadius: 15,
     justifyContent: "flex-start",
-  },
-  btn: {
-    marginTop: 32,
-    backgroundColor: COLORS.accent,
-    borderRadius: 15,
-    height: 58,
-    alignItems: "center",
-    flexDirection: "row",
-  },
-  btnText: {
-    color: COLORS.white,
-    fontSize: 18,
-    textAlign: "center",
   },
   text: {
     fontSize: 18,
