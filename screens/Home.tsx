@@ -13,10 +13,6 @@ import SvgFuel from "../components/svg/SvgFuel";
 import SvgCard from "../components/svg/SvgCard";
 import MapComponent from "../components/MapComponent";
 import { COLORS } from "../theme";
-import { DrawerScreenProps } from "@react-navigation/drawer";
-import { RootStackParamList } from "../types/root.types";
-
-type Props = DrawerScreenProps<RootStackParamList, "Home">;
 
 export default function Home() {
   return (

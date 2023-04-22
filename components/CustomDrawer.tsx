@@ -1,7 +1,6 @@
 import {
   DrawerContentScrollView,
   DrawerItemList,
-  DrawerItem,
 } from "@react-navigation/drawer";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
 import CustomText from "./CustomText";
