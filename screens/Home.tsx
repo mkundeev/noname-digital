@@ -43,7 +43,9 @@ export default function Home() {
           </View>
         </View>
         <CustomText style={styles.text}>Паливна картка</CustomText>
-        <View style={styles.whiteContainer}>
+        <View
+          style={{ ...styles.whiteContainer, justifyContent: "space-between" }}
+        >
           <View style={styles.greyCircle}>
             <SvgCard />
           </View>
@@ -102,6 +104,7 @@ const styles = StyleSheet.create({
   },
   cardText: {
     marginLeft: 12,
+    flex: 1,
   },
   balance: {
     marginLeft: 7,

@@ -6,17 +6,9 @@ import { MaineStackParamList } from "../types/root.types";
 const MainStack = createNativeStackNavigator<MaineStackParamList>();
 export default function MainNav() {
   return (
-    <MainStack.Navigator>
-      <MainStack.Screen
-        options={{ headerShown: false }}
-        name="HomeNav"
-        component={HomeNav}
-      />
-      <MainStack.Screen
-        options={{ headerShown: false }}
-        name="AuthNav"
-        component={AuthNav}
-      />
+    <MainStack.Navigator screenOptions={{ headerShown: false }}>
+      <MainStack.Screen name="HomeNav" component={HomeNav} />
+      <MainStack.Screen name="AuthNav" component={AuthNav} />
     </MainStack.Navigator>
   );
 }

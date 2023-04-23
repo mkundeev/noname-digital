@@ -18,4 +18,5 @@ export type AuthStackParamList = {
   InputPhoneScreen: undefined;
   ConfirmPhoneScreen: { phone: string; code: string };
   NameScreen: undefined;
+  DateScreen: undefined;
 };

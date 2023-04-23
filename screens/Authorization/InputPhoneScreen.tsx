@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   Keyboard,
   TouchableWithoutFeedback,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import CustomText from "../../components/CustomText";
 import CustomButton from "../../components/CustomButton";
@@ -74,15 +76,19 @@ export default function InputPhoneScreen({ navigation }: Props) {
             </View>
           </View>
         </View>
-        <CustomButton
-          onPress={() =>
-            navigation.navigate("ConfirmPhoneScreen", { phone, code: "1111" })
-          }
-          title="далі"
-          styleBtn={styles.btn}
-          styleTitle={styles.btnText}
-          disabled={!isValid}
-        ></CustomButton>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "position" : "height"}
+        >
+          <CustomButton
+            onPress={() =>
+              navigation.navigate("ConfirmPhoneScreen", { phone, code: "1111" })
+            }
+            title="далі"
+            styleBtn={styles.btn}
+            styleTitle={styles.btnText}
+            disabled={!isValid}
+          ></CustomButton>
+        </KeyboardAvoidingView>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -92,8 +98,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 76,
     paddingHorizontal: 32,
-    justifyContent: "space-between",
-    paddingBottom: 18,
   },
   text: {
     textTransform: "uppercase",
@@ -121,6 +125,7 @@ const styles = StyleSheet.create({
     color: COLORS.text,
     fontFamily: "MusticaPro",
     fontSize: 14,
+    width: "100%",
   },
   flag: {
     position: "absolute",
@@ -136,6 +141,8 @@ const styles = StyleSheet.create({
   },
   btn: {
     height: 44,
+    marginBottom: 18,
+    marginTop: 166,
   },
   btnText: {
     textTransform: "uppercase",

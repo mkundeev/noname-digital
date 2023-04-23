@@ -6,7 +6,10 @@ export default function MapComponent() {
   return (
     <View style={styles.container}>
       <MapView
-        style={{ width: "100%", height: "100%" }}
+        style={{
+          flex: 1,
+          borderRadius: 16,
+        }}
         initialRegion={{
           latitude: 50.45466,
           longitude: 30.5238,
@@ -22,9 +25,9 @@ const styles = StyleSheet.create({
     flex: 1,
     marginTop: 18,
     height: 118,
-    borderRadius: 16,
     borderColor: "#FCFFFE",
     borderWidth: 1,
-    overflow: "hidden",
+    position: "relative",
+    borderRadius: 16,
   },
 });

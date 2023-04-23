@@ -8,6 +8,8 @@ import {
   Keyboard,
   TouchableWithoutFeedback,
   Text,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import CustomText from "../../components/CustomText";
 import CustomButton from "../../components/CustomButton";
@@ -44,82 +46,85 @@ export default function ConfirmPhoneScreen({ navigation, route }: Props) {
     setCode("1111");
   };
 
-  const onSubmit = () => {
-    console.log(value === route.params.code);
-  };
-
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
-        <View style={styles.topWrap}>
-          <Image
-            source={require("../../assets/logoX.png")}
-            style={{ width: 67, height: 91 }}
-          />
-          <CustomText style={styles.text}>процес реєстраціЇ</CustomText>
-          <View style={styles.inputWrap}>
-            <CustomText>Ваш номер телефону</CustomText>
-            <View style={styles.inputContainer}>
-              <View style={styles.flag}>
-                <Image
-                  source={require("../../assets/flag.png")}
-                  style={{ width: 21, height: 21 }}
-                />
-              </View>
-              <TextInput
-                style={styles.input}
-                value={route.params.phone}
-                editable={false}
-              />
-              <TouchableOpacity
-                disabled={value.length === 4}
-                style={{
-                  ...styles.pen,
-                  backgroundColor: value.length === 4 ? "#ccc" : COLORS.accent,
-                }}
-                onPress={() => navigation.navigate("InputPhoneScreen")}
-              >
-                <Octicons name="pencil" size={10} color={COLORS.white} />
-              </TouchableOpacity>
-            </View>
-            <CustomText style={{ marginTop: 24 }}>Введіть код з SMS</CustomText>
-            <CodeField
-              ref={ref}
-              {...props}
-              value={value}
-              onChangeText={handleChange}
-              cellCount={4}
-              rootStyle={styles.codeFieldRoot}
-              keyboardType="number-pad"
-              textContentType="oneTimeCode"
-              renderCell={({ index, symbol, isFocused }) => (
-                <Fragment key={index}>
-                  <Text
-                    key={`value-${index}`}
-                    style={[
-                      styles.inputSMSContainer,
-                      isValid && value.length === 4 && styles.isValid,
-                      !isValid && value.length === 4 && styles.isInvalid,
-                    ]}
-                    onLayout={getCellOnLayoutHandler(index)}
-                  >
-                    {symbol || (isFocused ? <Cursor /> : null)}
-                  </Text>
-                </Fragment>
-              )}
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "position" : "padding"}
+        >
+          <View style={styles.topWrap}>
+            <Image
+              source={require("../../assets/logoX.png")}
+              style={{ width: 67, height: 91 }}
             />
+            <CustomText style={styles.text}>процес реєстраціЇ</CustomText>
+            <View style={styles.inputWrap}>
+              <CustomText>Ваш номер телефону</CustomText>
+              <View style={styles.inputContainer}>
+                <View style={styles.flag}>
+                  <Image
+                    source={require("../../assets/flag.png")}
+                    style={{ width: 21, height: 21 }}
+                  />
+                </View>
+                <TextInput
+                  style={styles.input}
+                  value={route.params.phone}
+                  editable={false}
+                />
+                <TouchableOpacity
+                  disabled={value.length === 4}
+                  style={{
+                    ...styles.pen,
+                    backgroundColor:
+                      value.length === 4 ? "#ccc" : COLORS.accent,
+                  }}
+                  onPress={() => navigation.navigate("InputPhoneScreen")}
+                >
+                  <Octicons name="pencil" size={10} color={COLORS.white} />
+                </TouchableOpacity>
+              </View>
+              <CustomText style={{ marginTop: 24 }}>
+                Введіть код з SMS
+              </CustomText>
+              <CodeField
+                ref={ref}
+                {...props}
+                value={value}
+                onChangeText={handleChange}
+                cellCount={4}
+                rootStyle={styles.codeFieldRoot}
+                keyboardType="number-pad"
+                textContentType="oneTimeCode"
+                renderCell={({ index, symbol, isFocused }) => (
+                  <Fragment key={index}>
+                    <Text
+                      key={`value-${index}`}
+                      style={[
+                        styles.inputSMSContainer,
+                        isValid && value.length === 4 && styles.isValid,
+                        !isValid && value.length === 4 && styles.isInvalid,
+                      ]}
+                      onLayout={getCellOnLayoutHandler(index)}
+                    >
+                      {symbol || (isFocused ? <Cursor /> : null)}
+                    </Text>
+                  </Fragment>
+                )}
+              />
+            </View>
+            <TouchableOpacity style={{ marginTop: 28 }} onPress={changeCode}>
+              <CustomText>Надіслати код повторно</CustomText>
+            </TouchableOpacity>
           </View>
-          <TouchableOpacity style={{ marginTop: 28 }} onPress={changeCode}>
-            <CustomText>Надіслати код повторно</CustomText>
-          </TouchableOpacity>
-        </View>
-        <CustomButton
-          onPress={() => navigation.navigate("NameScreen")}
-          title="далі"
-          styleBtn={styles.btn}
-          styleTitle={styles.btnText}
-          disabled={!isValid}
-        ></CustomButton>
+          <CustomButton
+            onPress={() => navigation.navigate("NameScreen")}
+            title="далі"
+            styleBtn={styles.btn}
+            styleTitle={styles.btnText}
+            disabled={!isValid}
+          ></CustomButton>
+        </KeyboardAvoidingView>
       </View>
     </TouchableWithoutFeedback>
   );
@@ -129,8 +134,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 76,
     paddingHorizontal: 32,
-    justifyContent: "space-between",
-    paddingBottom: 18,
   },
   text: {
     textTransform: "uppercase",
@@ -143,7 +146,6 @@ const styles = StyleSheet.create({
   },
   inputWrap: {
     marginTop: 38,
-    flex: 0,
     width: "100%",
   },
   inputContainer: {
@@ -163,11 +165,13 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: "center",
     lineHeight: 44,
+    overflow: "hidden",
   },
   input: {
     color: COLORS.text,
     fontFamily: "MusticaPro",
     fontSize: 14,
+    width: "100%",
   },
   pen: {
     width: 16,
@@ -186,6 +190,8 @@ const styles = StyleSheet.create({
   },
   btn: {
     height: 44,
+    marginBottom: 18,
+    marginTop: 28,
   },
   btnText: {
     textTransform: "uppercase",
