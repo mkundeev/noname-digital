@@ -12,6 +12,8 @@ import {
   DrawerDescriptorMap,
   DrawerNavigationHelpers,
 } from "@react-navigation/drawer/lib/typescript/src/types";
+import { logOut } from "../firebase/firebaseAPi";
+import { auth } from "../firebase/configFB";
 
 type Props = {
   state: DrawerNavigationState<ParamListBase>;
@@ -19,6 +21,10 @@ type Props = {
   descriptors: DrawerDescriptorMap;
 };
 export default function CustomDrawer(props: Props) {
+  const handleLogout = async () => {
+    await logOut();
+    props.navigation.navigate("Home");
+  };
   return (
     <DrawerContentScrollView
       {...props}
@@ -28,20 +34,41 @@ export default function CustomDrawer(props: Props) {
       <View>
         <DrawerItemList {...props} />
       </View>
-      <TouchableOpacity
-        style={styles.exit}
-        onPress={() => props.navigation.closeDrawer()}
-      >
-        <CustomText style={{ color: COLORS.white, fontSize: 18 }}>
-          Вийти
-        </CustomText>
-        <AntDesign
-          name="arrowright"
-          size={19}
-          color={COLORS.white}
-          style={{ marginLeft: 14 }}
-        />
-      </TouchableOpacity>
+      {auth.currentUser?.uid ? (
+        <TouchableOpacity style={styles.exit} onPress={handleLogout}>
+          <CustomText style={{ color: COLORS.white, fontSize: 18 }}>
+            Вийти
+          </CustomText>
+          <AntDesign
+            name="arrowright"
+            size={19}
+            color={COLORS.white}
+            style={{ marginLeft: 14 }}
+          />
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          style={{ ...styles.exit, width: "100%" }}
+          onPress={() =>
+            props.navigation.navigate("AuthNav", { screen: "InputPhoneScreen" })
+          }
+        >
+          <CustomText
+            style={{
+              color: COLORS.white,
+              fontSize: 18,
+            }}
+          >
+            Зареєструватися
+          </CustomText>
+          <AntDesign
+            name="arrowright"
+            size={19}
+            color={COLORS.white}
+            style={{ marginLeft: 14 }}
+          />
+        </TouchableOpacity>
+      )}
     </DrawerContentScrollView>
   );
 }

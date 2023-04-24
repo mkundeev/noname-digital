@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import CustomText from "../../components/CustomText";
 import CustomButton from "../../components/CustomButton";
@@ -11,6 +11,9 @@ import {
 import { COLORS } from "../../theme";
 import type { CompositeScreenProps } from "@react-navigation/native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { auth } from "../../firebase/configFB";
+import { UserData } from "../../types/user.types";
+import { getUserData } from "../../firebase/firebaseAPi";
 
 type Props = CompositeScreenProps<
   DrawerScreenProps<HomeStackParamList, "Profile">,
@@ -21,17 +24,45 @@ type Props = CompositeScreenProps<
 >;
 
 export default function ProfileScreen({ navigation }: Props) {
+  const [userDate, setUserData] = useState<UserData>();
+  const [isAuth, setIsAuth] = useState(false);
+  useEffect(() => {
+    const user = auth.currentUser;
+    if (user?.uid) {
+      setIsAuth(true);
+      const fetchData = async () => {
+        const data = await getUserData(user?.uid);
+        data && setUserData(data);
+      };
+      fetchData();
+    }
+  }, []);
   return (
     <View style={styles.container}>
-      <CustomText style={styles.text}>
-        Зареєструйстесь для створення власного кабінету
-      </CustomText>
-      <CustomButton
-        onPress={() => {
-          navigation.navigate("AuthNav", { screen: "InputPhoneScreen" });
-        }}
-        title="Зареєструватись"
-      />
+      {!isAuth ? (
+        <View>
+          <CustomText style={styles.text}>
+            Зареєструйстесь для створення власного кабінету
+          </CustomText>
+          <CustomButton
+            onPress={() => {
+              navigation.navigate("AuthNav", { screen: "InputPhoneScreen" });
+            }}
+            title="Зареєструватись"
+          />
+        </View>
+      ) : (
+        <View>
+          <CustomText style={styles.text}>Дані користувача</CustomText>
+          {userDate?.name && <CustomText>Імя: {userDate?.name}</CustomText>}
+          {userDate?.surname && (
+            <CustomText>Прізвище: {userDate?.surname}</CustomText>
+          )}
+          {userDate?.date && (
+            <CustomText>Дата народження: {userDate?.date}</CustomText>
+          )}
+        </View>
+      )}
     </View>
   );
 }

@@ -41,7 +41,12 @@ export default function DateScreen({ navigation, route }: Props) {
 
   const handleSubmit = async () => {
     if (user.current?.uid) {
-      await setUserData(user.current?.uid, name, surname, date.toString());
+      await setUserData(
+        user.current?.uid,
+        name,
+        surname,
+        date.toLocaleDateString("en-GB").replaceAll("/", ".")
+      );
       navigation.navigate("HomeNav", { screen: "Home" });
     }
   };

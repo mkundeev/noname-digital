@@ -1,7 +1,12 @@
-import { PhoneAuthProvider, signInWithCredential } from "firebase/auth";
+import {
+  PhoneAuthProvider,
+  signInWithCredential,
+  signOut,
+} from "firebase/auth";
 import { auth, db } from "./configFB";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
-import { setDoc, doc } from "firebase/firestore";
+import { setDoc, doc, getDoc } from "firebase/firestore";
+import { UserData } from "../types/user.types";
 
 export async function authUser(
   phoneNumber: string,
@@ -47,5 +52,24 @@ export async function setUserData(
     });
   } catch (e) {
     console.error("Error adding document: ", e);
+  }
+}
+
+export async function getUserData(userId: string) {
+  const docRef = doc(db, userId, "data");
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    return docSnap.data() as UserData;
+  } else {
+    console.log("No such document!");
+  }
+}
+
+export async function logOut() {
+  try {
+    await signOut(auth);
+  } catch (err) {
+    console.error(err);
   }
 }
