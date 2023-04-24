@@ -1,25 +1,24 @@
 import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import Home from "../screens/Home";
-import SvgMenu from "../components/svg/SvgMenu";
+import Home from "../screens/Home/Home";
+import ProfileScreen from "../screens/Home/ProfileScreen";
+import TalonsScreen from "../screens/Home/TalonsScreen";
+import PriceScreen from "../screens/Home/PriceScreen";
+import PromotionScreen from "../screens/Home/PromotionsScreen";
+import MapScreen from "../screens/Home/MapScreen";
 import { TouchableOpacity, View, Image, StyleSheet } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { COLORS } from "../theme";
 import CustomText from "../components/CustomText";
 import CustomDrawer from "../components/CustomDrawer";
-import ProfileScreen from "../screens/ProfileScreen";
+import SvgMenu from "../components/svg/SvgMenu";
+import SvgMap from "../components/svg/SvgMap";
 import SvgUser from "../components/svg/SvgUser";
-import TalonsScreen from "../screens/TalonsScreen";
-import SvgCard from "../components/svg/SvgCard";
-import PriceScreen from "../screens/PriceScreen";
 import SvgPrice from "../components/svg/SvgPrice";
 import SvgPercent from "../components/svg/SvgPercent";
-import PromotionScreen from "../screens/PromotionsScreen";
-import MapScreen from "../screens/MapScreen";
-import SvgMap from "../components/svg/SvgMap";
+import SvgCard from "../components/svg/SvgCard";
 import { HomeStackParamList } from "../types/root.types";
-import Test from "../firebase/test";
 
 const HomeStack = createDrawerNavigator<HomeStackParamList>();
 export default function HomeNav() {

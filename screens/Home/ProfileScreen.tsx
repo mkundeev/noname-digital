@@ -1,14 +1,14 @@
 import React from "react";
 import { View, StyleSheet } from "react-native";
-import CustomText from "../components/CustomText";
-import CustomButton from "../components/CustomButton";
+import CustomText from "../../components/CustomText";
+import CustomButton from "../../components/CustomButton";
 import type { DrawerScreenProps } from "@react-navigation/drawer";
 import {
   MaineStackParamList,
   HomeStackParamList,
   AuthStackParamList,
-} from "../types/root.types";
-import { COLORS } from "../theme";
+} from "../../types/root.types";
+import { COLORS } from "../../theme";
 import type { CompositeScreenProps } from "@react-navigation/native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 

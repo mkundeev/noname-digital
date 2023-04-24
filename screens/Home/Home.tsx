@@ -6,19 +6,22 @@ import {
   ScrollView,
   Image,
 } from "react-native";
-import CustomText from "../components/CustomText";
-import SvgPercent from "../components/svg/SvgPercent";
-import SvgScreen from "../components/svg/SvgScreen";
-import SvgFuel from "../components/svg/SvgFuel";
-import SvgCard from "../components/svg/SvgCard";
-import MapComponent from "../components/MapComponent";
-import { COLORS } from "../theme";
+import CustomText from "../../components/CustomText";
+import SvgPercent from "../../components/svg/SvgPercent";
+import SvgScreen from "../../components/svg/SvgScreen";
+import SvgFuel from "../../components/svg/SvgFuel";
+import SvgCard from "../../components/svg/SvgCard";
+import MapComponent from "../../components/MapComponent";
+import { COLORS } from "../../theme";
 
 export default function Home() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
-        <Image source={require("../assets/slider.jpg")} style={styles.slider} />
+        <Image
+          source={require("../../assets/slider.jpg")}
+          style={styles.slider}
+        />
         <CustomText style={styles.text}>Слідкуй за знижками</CustomText>
         <View style={styles.whiteContainer}>
           <View style={styles.greyCircle}>
@@ -51,7 +54,7 @@ export default function Home() {
           </View>
           <CustomText style={styles.balance}>1205.80 грн</CustomText>
           <Image
-            source={require("../assets/barcode.jpg")}
+            source={require("../../assets/barcode.jpg")}
             style={styles.barcode}
           />
         </View>
