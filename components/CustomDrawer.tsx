@@ -35,7 +35,12 @@ export default function CustomDrawer(props: Props) {
         <CustomText style={{ color: COLORS.white, fontSize: 18 }}>
           Вийти
         </CustomText>
-        <AntDesign name="arrowright" size={19} color={COLORS.white} />
+        <AntDesign
+          name="arrowright"
+          size={19}
+          color={COLORS.white}
+          style={{ marginLeft: 14 }}
+        />
       </TouchableOpacity>
     </DrawerContentScrollView>
   );
@@ -44,7 +49,7 @@ export default function CustomDrawer(props: Props) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: COLORS.accent,
-    paddingLeft: 28,
+    paddingLeft: 10,
     paddingTop: 110,
     paddingBottom: 50,
     minHeight: "100%",
@@ -53,5 +58,6 @@ const styles = StyleSheet.create({
     width: 88,
     flexDirection: "row",
     alignItems: "center",
+    paddingLeft: 28,
   },
 });

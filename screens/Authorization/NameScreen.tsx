@@ -55,7 +55,7 @@ export default function NameScreen({ navigation }: Props) {
             </View>
           </View>
           <CustomButton
-            onPress={() => navigation.navigate("DateScreen")}
+            onPress={() => navigation.navigate("DateScreen", { name, surname })}
             title="далі"
             styleBtn={styles.btn}
             styleTitle={styles.btnText}

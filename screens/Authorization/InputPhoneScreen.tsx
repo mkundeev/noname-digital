@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   View,
   StyleSheet,
@@ -16,12 +16,16 @@ import { COLORS } from "../../theme";
 import { AntDesign } from "@expo/vector-icons";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { AuthStackParamList } from "../../types/root.types";
+import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
+import { authUser, verifyCode } from "../../firebase/firebaseAPi";
+import { app } from "../../firebase/configFB";
 
 type Props = NativeStackScreenProps<AuthStackParamList, "InputPhoneScreen">;
 
 export default function InputPhoneScreen({ navigation }: Props) {
   const [phone, setPhone] = useState("+38(0");
   const [isValid, setIsValid] = useState(false);
+  const recaptchaVerifier = useRef<FirebaseRecaptchaVerifierModal>(null);
 
   const handleChange = (value: string) => {
     let newValue = value;
@@ -37,9 +41,27 @@ export default function InputPhoneScreen({ navigation }: Props) {
     }
     setPhone(newValue);
   };
+
+  const handleSubmit = async () => {
+    if (recaptchaVerifier.current) {
+      const userId = await authUser(
+        "+1 650-555-3434",
+        recaptchaVerifier.current
+      );
+      userId &&
+        navigation.navigate("ConfirmPhoneScreen", {
+          phone,
+          userId,
+        });
+    }
+  };
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
+        <FirebaseRecaptchaVerifierModal
+          ref={recaptchaVerifier}
+          firebaseConfig={app.options}
+        />
         <View style={styles.topWrap}>
           <Image
             source={require("../../assets/logoX.png")}
@@ -80,9 +102,7 @@ export default function InputPhoneScreen({ navigation }: Props) {
           behavior={Platform.OS === "ios" ? "position" : "height"}
         >
           <CustomButton
-            onPress={() =>
-              navigation.navigate("ConfirmPhoneScreen", { phone, code: "1111" })
-            }
+            onPress={handleSubmit}
             title="далі"
             styleBtn={styles.btn}
             styleTitle={styles.btnText}

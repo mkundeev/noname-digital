@@ -1,4 +1,4 @@
-import { useState, Fragment } from "react";
+import { useState, Fragment, useEffect, useRef } from "react";
 import {
   View,
   StyleSheet,
@@ -20,35 +20,52 @@ import { Octicons } from "@expo/vector-icons";
 import {
   CodeField,
   Cursor,
-  useBlurOnFulfill,
   useClearByFocusCell,
 } from "react-native-confirmation-code-field";
+import ToastManager, { Toast } from "toastify-react-native";
+import { verifyCode } from "../../firebase/firebaseAPi";
 
 type Props = NativeStackScreenProps<AuthStackParamList, "ConfirmPhoneScreen">;
 
 export default function ConfirmPhoneScreen({ navigation, route }: Props) {
   const [isValid, setIsValid] = useState(false);
   const [value, setValue] = useState("");
-  const [code, setCode] = useState(route.params.code);
-  const ref = useBlurOnFulfill({ value, cellCount: 4 });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
     setValue,
   });
+  const CELLCOUNT = 6;
+  const TESTCODE = '111111'
+  const ref = useRef<TextInput>(null);
+
+  const showToasts = () => {
+    Toast.success(`SMS code 111111`);
+  };
+
+  useEffect(() => {
+    showToasts();
+    if (ref.current) ref.current.focus();
+  }, []);
 
   const handleChange = (value: string) => {
     setIsValid(false);
-    if (value === code) setIsValid(true);
+    if (value === TESTCODE) setIsValid(true);
     setValue(value);
   };
 
   const changeCode = () => {
-    setCode("1111");
+    showToasts();
+  };
+
+  const handleSubmit = async () => {
+    await verifyCode(route.params.userId, TESTCODE);
+    navigation.navigate("NameScreen");
   };
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
+        <ToastManager />
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "position" : "padding"}
         >
@@ -73,13 +90,13 @@ export default function ConfirmPhoneScreen({ navigation, route }: Props) {
                   editable={false}
                 />
                 <TouchableOpacity
-                  disabled={value.length === 4}
+                  disabled={value.length === CELLCOUNT}
                   style={{
                     ...styles.pen,
                     backgroundColor:
-                      value.length === 4 ? "#ccc" : COLORS.accent,
+                      value.length === CELLCOUNT ? "#ccc" : COLORS.accent,
                   }}
-                  onPress={() => navigation.navigate("InputPhoneScreen")}
+                  onPress={handleSubmit}
                 >
                   <Octicons name="pencil" size={10} color={COLORS.white} />
                 </TouchableOpacity>
@@ -92,7 +109,7 @@ export default function ConfirmPhoneScreen({ navigation, route }: Props) {
                 {...props}
                 value={value}
                 onChangeText={handleChange}
-                cellCount={4}
+                cellCount={CELLCOUNT}
                 rootStyle={styles.codeFieldRoot}
                 keyboardType="number-pad"
                 textContentType="oneTimeCode"
@@ -102,8 +119,10 @@ export default function ConfirmPhoneScreen({ navigation, route }: Props) {
                       key={`value-${index}`}
                       style={[
                         styles.inputSMSContainer,
-                        isValid && value.length === 4 && styles.isValid,
-                        !isValid && value.length === 4 && styles.isInvalid,
+                        isValid && value.length === CELLCOUNT && styles.isValid,
+                        !isValid &&
+                          value.length === CELLCOUNT &&
+                          styles.isInvalid,
                       ]}
                       onLayout={getCellOnLayoutHandler(index)}
                     >
@@ -118,7 +137,7 @@ export default function ConfirmPhoneScreen({ navigation, route }: Props) {
             </TouchableOpacity>
           </View>
           <CustomButton
-            onPress={() => navigation.navigate("NameScreen")}
+            onPress={handleSubmit}
             title="далі"
             styleBtn={styles.btn}
             styleTitle={styles.btnText}

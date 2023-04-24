@@ -19,6 +19,7 @@ import PromotionScreen from "../screens/PromotionsScreen";
 import MapScreen from "../screens/MapScreen";
 import SvgMap from "../components/svg/SvgMap";
 import { HomeStackParamList } from "../types/root.types";
+import Test from "../firebase/test";
 
 const HomeStack = createDrawerNavigator<HomeStackParamList>();
 export default function HomeNav() {
@@ -40,7 +41,6 @@ export default function HomeNav() {
           color: COLORS.white,
           fontSize: 18,
         },
-        drawerItemStyle: { marginLeft: -7 },
         headerRight: () => (
           <TouchableOpacity
             activeOpacity={0.8}

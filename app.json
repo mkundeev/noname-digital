@@ -1,5 +1,6 @@
 {
   "expo": {
+    
     "name": "noname-digital",
     "slug": "noname-digital",
     "version": "1.0.0",
@@ -25,6 +26,16 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "ios": {
+            "useFrameworks": "static"
+          }
+        }
+      ]
+    ]
   }
 }

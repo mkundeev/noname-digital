@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import {
   View,
   StyleSheet,
@@ -11,20 +11,45 @@ import CustomText from "../../components/CustomText";
 import CustomButton from "../../components/CustomButton";
 import { COLORS } from "../../theme";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { AuthStackParamList } from "../../types/root.types";
-import { DateTimePickerEvent } from "@react-native-community/datetimepicker";
+import type { DrawerScreenProps } from "@react-navigation/drawer";
+import {
+  AuthStackParamList,
+  MaineStackParamList,
+  HomeStackParamList,
+} from "../../types/root.types";
 import { Entypo } from "@expo/vector-icons";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { auth } from "../../firebase/configFB";
+import { setUserData } from "../../firebase/firebaseAPi";
+import type { CompositeScreenProps } from "@react-navigation/native";
 
-type Props = NativeStackScreenProps<AuthStackParamList, "DateScreen">;
+type Props = CompositeScreenProps<
+  NativeStackScreenProps<AuthStackParamList, "DateScreen">,
+  CompositeScreenProps<
+    NativeStackScreenProps<MaineStackParamList>,
+    DrawerScreenProps<HomeStackParamList>
+  >
+>;
 
-export default function DateScreen({ navigation }: Props) {
+export default function DateScreen({ navigation, route }: Props) {
+  const { name, surname } = route.params;
   const [date, setDate] = useState(new Date());
   const [isChecked, setChecked] = useState(false);
   const [isOpen, setOpen] = useState(false);
+  const user = useRef(auth.currentUser);
+  console.log(user.current);
 
-  const handleDateChange = (event: DateTimePickerEvent, date?: Date) =>
-    date && setDate(date);
+  const handleSubmit = async () => {
+    if (user.current?.uid) {
+      await setUserData(user.current?.uid, name, surname, date.toString());
+      navigation.navigate("HomeNav", { screen: "Home" });
+    }
+  };
+
+  const onConfirm = (date: Date) => {
+    setDate(date);
+    setOpen(false);
+  };
 
   return (
     <TouchableWithoutFeedback onPress={() => setOpen(false)}>
@@ -78,7 +103,7 @@ export default function DateScreen({ navigation }: Props) {
         </View>
         <View>
           <CustomButton
-            onPress={() => {}}
+            onPress={handleSubmit}
             title="далі"
             styleBtn={styles.btn}
             styleTitle={styles.btnText}
@@ -88,7 +113,7 @@ export default function DateScreen({ navigation }: Props) {
         <DateTimePickerModal
           isVisible={isOpen}
           mode="date"
-          onConfirm={() => setOpen(true)}
+          onConfirm={onConfirm}
           onCancel={() => setOpen(false)}
           date={date}
           maximumDate={new Date()}

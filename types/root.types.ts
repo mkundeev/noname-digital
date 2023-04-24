@@ -16,7 +16,7 @@ export type HomeStackParamList = {
 
 export type AuthStackParamList = {
   InputPhoneScreen: undefined;
-  ConfirmPhoneScreen: { phone: string; code: string };
+  ConfirmPhoneScreen: { phone: string; userId: string };
   NameScreen: undefined;
-  DateScreen: undefined;
+  DateScreen: { name: string; surname: string };
 };

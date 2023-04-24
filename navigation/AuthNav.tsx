@@ -15,7 +15,7 @@ export default function AuthNav() {
       screenOptions={({ navigation }) => ({
         headerTransparent: true,
         headerBackVisible: false,
-        animation: "fade",
+        animation: "none",
 
         headerTitle: () => <View></View>,
         headerLeft: () => (
