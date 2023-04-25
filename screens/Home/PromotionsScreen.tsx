@@ -5,7 +5,7 @@ import { COLORS } from "../../theme";
 export default function PromotionScreen() {
   return (
     <View style={styles.container}>
-      <CustomText style={styles.text}>Promotions</CustomText>
+      <CustomText style={styles.text}>Акції</CustomText>
     </View>
   );
 }

@@ -5,7 +5,7 @@ import { COLORS } from "../../theme";
 export default function PriceScreen() {
   return (
     <View style={styles.container}>
-      <CustomText style={styles.text}>Prices</CustomText>
+      <CustomText style={styles.text}>Ціни</CustomText>
     </View>
   );
 }

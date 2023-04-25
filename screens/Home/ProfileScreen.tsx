@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
+import { useIsFocused } from "@react-navigation/native";
 import CustomText from "../../components/CustomText";
 import CustomButton from "../../components/CustomButton";
 import type { DrawerScreenProps } from "@react-navigation/drawer";
@@ -14,6 +15,7 @@ import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { auth } from "../../firebase/configFB";
 import { UserData } from "../../types/user.types";
 import { getUserData } from "../../firebase/firebaseAPi";
+import { AuthContext } from "../../contexts/AuthContext";
 
 type Props = CompositeScreenProps<
   DrawerScreenProps<HomeStackParamList, "Profile">,
@@ -24,12 +26,11 @@ type Props = CompositeScreenProps<
 >;
 
 export default function ProfileScreen({ navigation }: Props) {
+  const { isLogin } = useContext(AuthContext);
   const [userDate, setUserData] = useState<UserData>();
-  const [isAuth, setIsAuth] = useState(false);
   useEffect(() => {
     const user = auth.currentUser;
-    if (user?.uid) {
-      setIsAuth(true);
+    if (isLogin && user?.uid) {
       const fetchData = async () => {
         const data = await getUserData(user?.uid);
         data && setUserData(data);
@@ -37,9 +38,10 @@ export default function ProfileScreen({ navigation }: Props) {
       fetchData();
     }
   }, []);
+
   return (
     <View style={styles.container}>
-      {!isAuth ? (
+      {!isLogin ? (
         <View>
           <CustomText style={styles.text}>
             Зареєструйстесь для створення власного кабінету

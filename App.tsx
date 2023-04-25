@@ -4,7 +4,7 @@ import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { View, ImageBackground, StyleSheet } from "react-native";
 import MainNav from "./navigation/MainNav";
 import * as Font from "expo-font";
-import { COLORS } from "./theme";
+import { AuthState } from "./contexts/AuthContext";
 
 const navTheme = {
   ...DefaultTheme,
@@ -43,7 +43,9 @@ export default function App() {
           >
             <StatusBar style="dark" />
             <NavigationContainer theme={navTheme}>
-              <MainNav />
+              <AuthState>
+                <MainNav />
+              </AuthState>
             </NavigationContainer>
           </ImageBackground>
         </View>

@@ -115,6 +115,7 @@ export default function HomeNav() {
             </View>
           ),
           drawerLabel: "Мої талони",
+          title: "Мої талони",
         }}
       />
       <HomeStack.Screen
@@ -127,6 +128,7 @@ export default function HomeNav() {
             </View>
           ),
           drawerLabel: "Ціни",
+          title: "Ціни",
         }}
       />
       <HomeStack.Screen
@@ -139,6 +141,7 @@ export default function HomeNav() {
             </View>
           ),
           drawerLabel: "Акції",
+          title: "Акції",
         }}
       />
       <HomeStack.Screen
@@ -151,6 +154,7 @@ export default function HomeNav() {
             </View>
           ),
           drawerLabel: "Карта АЗС",
+          title: "Карта АЗС",
         }}
       />
     </HomeStack.Navigator>

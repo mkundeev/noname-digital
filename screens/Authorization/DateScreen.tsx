@@ -1,4 +1,5 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
 import {
   View,
   StyleSheet,
@@ -37,6 +38,7 @@ export default function DateScreen({ navigation, route }: Props) {
   const [isChecked, setChecked] = useState(false);
   const [isOpen, setOpen] = useState(false);
   const user = useRef(auth.currentUser);
+  const { setIsLogin } = useContext(AuthContext);
 
   const handleSubmit = async () => {
     if (user.current?.uid) {
@@ -46,6 +48,7 @@ export default function DateScreen({ navigation, route }: Props) {
         surname,
         date.toLocaleDateString("en-GB").replaceAll("/", ".")
       );
+      setIsLogin(true);
       navigation.navigate("HomeNav", { screen: "Home" });
     }
   };

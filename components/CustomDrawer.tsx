@@ -13,7 +13,8 @@ import {
   DrawerNavigationHelpers,
 } from "@react-navigation/drawer/lib/typescript/src/types";
 import { logOut } from "../firebase/firebaseAPi";
-import { auth } from "../firebase/configFB";
+import { useContext } from "react";
+import { AuthContext } from "../contexts/AuthContext";
 
 type Props = {
   state: DrawerNavigationState<ParamListBase>;
@@ -21,8 +22,10 @@ type Props = {
   descriptors: DrawerDescriptorMap;
 };
 export default function CustomDrawer(props: Props) {
+  const { isLogin, setIsLogin } = useContext(AuthContext);
   const handleLogout = async () => {
     await logOut();
+    setIsLogin(false);
     props.navigation.navigate("Home");
   };
   return (
@@ -34,7 +37,7 @@ export default function CustomDrawer(props: Props) {
       <View>
         <DrawerItemList {...props} />
       </View>
-      {auth.currentUser?.uid ? (
+      {isLogin ? (
         <TouchableOpacity style={styles.exit} onPress={handleLogout}>
           <CustomText style={{ color: COLORS.white, fontSize: 18 }}>
             Вийти

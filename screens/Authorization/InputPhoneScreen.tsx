@@ -44,10 +44,7 @@ export default function InputPhoneScreen({ navigation }: Props) {
 
   const handleSubmit = async () => {
     if (recaptchaVerifier.current) {
-      const userId = await authUser(
-        "+1 650-555-3434",
-        recaptchaVerifier.current
-      );
+      const userId = await authUser(phone, recaptchaVerifier.current);
       userId &&
         navigation.navigate("ConfirmPhoneScreen", {
           phone,

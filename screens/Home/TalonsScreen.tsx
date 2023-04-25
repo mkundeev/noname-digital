@@ -1,4 +1,5 @@
 import { View, StyleSheet } from "react-native";
+import { useContext } from "react";
 import CustomText from "../../components/CustomText";
 import CustomButton from "../../components/CustomButton";
 import type { DrawerScreenProps } from "@react-navigation/drawer";
@@ -10,6 +11,9 @@ import {
 import { COLORS } from "../../theme";
 import type { CompositeScreenProps } from "@react-navigation/native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
+import { auth } from "../../firebase/configFB";
+import { useCode } from "react-native-reanimated";
+import { AuthContext } from "../../contexts/AuthContext";
 
 type Props = CompositeScreenProps<
   DrawerScreenProps<HomeStackParamList, "Talons">,
@@ -19,12 +23,26 @@ type Props = CompositeScreenProps<
   >
 >;
 export default function TalonsScreen({ navigation }: Props) {
+  const { isLogin } = useContext(AuthContext);
   return (
     <View style={styles.container}>
-      <CustomText style={styles.text}>
-        Зареєструйстесь для створення власного кабінету
-      </CustomText>
-      <CustomButton onPress={() => {}} title="Зареєструватись" />
+      {!isLogin ? (
+        <View>
+          <CustomText style={styles.text}>
+            Зареєструйстесь для створення власного кабінету
+          </CustomText>
+          <CustomButton
+            onPress={() => {
+              navigation.navigate("AuthNav", { screen: "InputPhoneScreen" });
+            }}
+            title="Зареєструватись"
+          />
+        </View>
+      ) : (
+        <View>
+          <CustomText style={styles.text}>Ваші талони</CustomText>
+        </View>
+      )}
     </View>
   );
 }
