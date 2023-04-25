@@ -14,10 +14,12 @@ export async function authUser(
 ) {
   try {
     const phoneProvider = new PhoneAuthProvider(auth);
+    console.log(phoneProvider);
     const verificationId = await phoneProvider.verifyPhoneNumber(
       phoneNumber,
       ref
     );
+    console.log(verificationId);
     return verificationId;
   } catch (err) {
     console.error(err);

@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
-import { useIsFocused } from "@react-navigation/native";
 import CustomText from "../../components/CustomText";
 import CustomButton from "../../components/CustomButton";
 import type { DrawerScreenProps } from "@react-navigation/drawer";

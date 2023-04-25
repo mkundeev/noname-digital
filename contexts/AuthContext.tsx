@@ -11,12 +11,12 @@ interface IAuthContext {
 }
 
 export const AuthContext = createContext<IAuthContext>({
-  userId:'',
+  userId: "",
   setUserId: () => {},
 });
 
 export const AuthState = ({ children }: { children: React.ReactNode }) => {
-  const [userId, setUserId] = useState('');
+  const [userId, setUserId] = useState("");
 
   return (
     <AuthContext.Provider value={{ userId, setUserId }}>
