@@ -22,10 +22,10 @@ type Props = {
   descriptors: DrawerDescriptorMap;
 };
 export default function CustomDrawer(props: Props) {
-  const { isLogin, setIsLogin } = useContext(AuthContext);
+  const { userId, setUserId } = useContext(AuthContext);
   const handleLogout = async () => {
     await logOut();
-    setIsLogin(false);
+    setUserId("");
     props.navigation.navigate("Home");
   };
   return (
@@ -37,7 +37,7 @@ export default function CustomDrawer(props: Props) {
       <View>
         <DrawerItemList {...props} />
       </View>
-      {isLogin ? (
+      {userId ? (
         <TouchableOpacity style={styles.exit} onPress={handleLogout}>
           <CustomText style={{ color: COLORS.white, fontSize: 18 }}>
             Вийти

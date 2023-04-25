@@ -11,8 +11,6 @@ import {
 import { COLORS } from "../../theme";
 import type { CompositeScreenProps } from "@react-navigation/native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { auth } from "../../firebase/configFB";
-import { useCode } from "react-native-reanimated";
 import { AuthContext } from "../../contexts/AuthContext";
 
 type Props = CompositeScreenProps<
@@ -23,10 +21,10 @@ type Props = CompositeScreenProps<
   >
 >;
 export default function TalonsScreen({ navigation }: Props) {
-  const { isLogin } = useContext(AuthContext);
+  const { userId } = useContext(AuthContext);
   return (
     <View style={styles.container}>
-      {!isLogin ? (
+      {!userId ? (
         <View>
           <CustomText style={styles.text}>
             Зареєструйстесь для створення власного кабінету

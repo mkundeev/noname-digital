@@ -12,7 +12,6 @@ import {
 import { COLORS } from "../../theme";
 import type { CompositeScreenProps } from "@react-navigation/native";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
-import { auth } from "../../firebase/configFB";
 import { UserData } from "../../types/user.types";
 import { getUserData } from "../../firebase/firebaseAPi";
 import { AuthContext } from "../../contexts/AuthContext";
@@ -26,22 +25,21 @@ type Props = CompositeScreenProps<
 >;
 
 export default function ProfileScreen({ navigation }: Props) {
-  const { isLogin } = useContext(AuthContext);
+  const { userId } = useContext(AuthContext);
   const [userDate, setUserData] = useState<UserData>();
   useEffect(() => {
-    const user = auth.currentUser;
-    if (isLogin && user?.uid) {
+    if (userId) {
       const fetchData = async () => {
-        const data = await getUserData(user?.uid);
+        const data = await getUserData(userId);
         data && setUserData(data);
       };
       fetchData();
     }
-  }, []);
+  }, [userId]);
 
   return (
     <View style={styles.container}>
-      {!isLogin ? (
+      {!userId ? (
         <View>
           <CustomText style={styles.text}>
             Зареєструйстесь для створення власного кабінету

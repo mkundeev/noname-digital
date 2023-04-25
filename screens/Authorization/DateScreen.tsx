@@ -38,7 +38,7 @@ export default function DateScreen({ navigation, route }: Props) {
   const [isChecked, setChecked] = useState(false);
   const [isOpen, setOpen] = useState(false);
   const user = useRef(auth.currentUser);
-  const { setIsLogin } = useContext(AuthContext);
+  const { setUserId } = useContext(AuthContext);
 
   const handleSubmit = async () => {
     if (user.current?.uid) {
@@ -48,7 +48,7 @@ export default function DateScreen({ navigation, route }: Props) {
         surname,
         date.toLocaleDateString("en-GB").replaceAll("/", ".")
       );
-      setIsLogin(true);
+      setUserId(user.current?.uid);
       navigation.navigate("HomeNav", { screen: "Home" });
     }
   };

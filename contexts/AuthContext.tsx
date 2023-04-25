@@ -6,20 +6,20 @@ import React, {
 } from "react";
 
 interface IAuthContext {
-  isLogin: boolean;
-  setIsLogin: Dispatch<SetStateAction<boolean>>;
+  userId: string;
+  setUserId: Dispatch<SetStateAction<string>>;
 }
 
 export const AuthContext = createContext<IAuthContext>({
-  isLogin: false,
-  setIsLogin: () => {},
+  userId:'',
+  setUserId: () => {},
 });
 
 export const AuthState = ({ children }: { children: React.ReactNode }) => {
-  const [isLogin, setIsLogin] = useState(false);
+  const [userId, setUserId] = useState('');
 
   return (
-    <AuthContext.Provider value={{ isLogin, setIsLogin }}>
+    <AuthContext.Provider value={{ userId, setUserId }}>
       {children}
     </AuthContext.Provider>
   );
