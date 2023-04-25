@@ -37,7 +37,6 @@ export default function DateScreen({ navigation, route }: Props) {
   const [isChecked, setChecked] = useState(false);
   const [isOpen, setOpen] = useState(false);
   const user = useRef(auth.currentUser);
-  console.log(user.current);
 
   const handleSubmit = async () => {
     if (user.current?.uid) {

@@ -27,15 +27,11 @@ export async function verifyCode(
   verificationId: string,
   verificationCode: string
 ) {
-  try {
-    const credential = PhoneAuthProvider.credential(
-      verificationId,
-      verificationCode
-    );
-    await signInWithCredential(auth, credential);
-  } catch (err) {
-    console.error(err);
-  }
+  const credential = PhoneAuthProvider.credential(
+    verificationId,
+    verificationCode
+  );
+  await signInWithCredential(auth, credential);
 }
 
 export async function setUserData(

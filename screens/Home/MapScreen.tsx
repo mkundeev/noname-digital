@@ -1,10 +1,5 @@
 import React from "react";
-import { View } from "react-native";
-import CustomText from "../../components/CustomText";
+import MapComponent from "../../components/MapComponent";
 export default function MapScreen() {
-  return (
-    <View>
-      <CustomText>Map</CustomText>
-    </View>
-  );
+  return <MapComponent />;
 }

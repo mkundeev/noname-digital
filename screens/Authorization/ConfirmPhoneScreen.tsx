@@ -22,7 +22,6 @@ import {
   Cursor,
   useClearByFocusCell,
 } from "react-native-confirmation-code-field";
-import ToastManager, { Toast } from "toastify-react-native";
 import { verifyCode } from "../../firebase/firebaseAPi";
 
 type Props = NativeStackScreenProps<AuthStackParamList, "ConfirmPhoneScreen">;
@@ -35,37 +34,30 @@ export default function ConfirmPhoneScreen({ navigation, route }: Props) {
     setValue,
   });
   const CELLCOUNT = 6;
-  const TESTCODE = '111111'
   const ref = useRef<TextInput>(null);
 
-  const showToasts = () => {
-    Toast.success(`SMS code 111111`);
-  };
-
   useEffect(() => {
-    showToasts();
     if (ref.current) ref.current.focus();
   }, []);
 
   const handleChange = (value: string) => {
     setIsValid(false);
-    if (value === TESTCODE) setIsValid(true);
+    if (value.length === CELLCOUNT) setIsValid(true);
     setValue(value);
   };
 
-  const changeCode = () => {
-    showToasts();
-  };
-
   const handleSubmit = async () => {
-    await verifyCode(route.params.userId, TESTCODE);
-    navigation.navigate("NameScreen");
+    try {
+      await verifyCode(route.params.userId, value);
+      navigation.navigate("NameScreen");
+    } catch (err) {
+      setIsValid(false);
+    }
   };
 
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
-        <ToastManager />
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "position" : "padding"}
         >
@@ -132,7 +124,7 @@ export default function ConfirmPhoneScreen({ navigation, route }: Props) {
                 )}
               />
             </View>
-            <TouchableOpacity style={{ marginTop: 28 }} onPress={changeCode}>
+            <TouchableOpacity style={{ marginTop: 28 }}>
               <CustomText>Надіслати код повторно</CustomText>
             </TouchableOpacity>
           </View>
@@ -141,7 +133,7 @@ export default function ConfirmPhoneScreen({ navigation, route }: Props) {
             title="далі"
             styleBtn={styles.btn}
             styleTitle={styles.btnText}
-            disabled={!isValid}
+            disabled={!(value.length === 6)}
           ></CustomButton>
         </KeyboardAvoidingView>
       </View>

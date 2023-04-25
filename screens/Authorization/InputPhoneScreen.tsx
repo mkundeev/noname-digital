@@ -17,7 +17,7 @@ import { AntDesign } from "@expo/vector-icons";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { AuthStackParamList } from "../../types/root.types";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
-import { authUser, verifyCode } from "../../firebase/firebaseAPi";
+import { authUser } from "../../firebase/firebaseAPi";
 import { app } from "../../firebase/configFB";
 
 type Props = NativeStackScreenProps<AuthStackParamList, "InputPhoneScreen">;
