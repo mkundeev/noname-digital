@@ -12,43 +12,41 @@ import SvgScreen from "../../components/svg/SvgScreen";
 import SvgFuel from "../../components/svg/SvgFuel";
 import SvgCard from "../../components/svg/SvgCard";
 import MapComponent from "../../components/MapComponent";
+import WhiteContainer from "../../components/WhiteContainer";
+
 import { COLORS } from "../../theme";
+import SwiperComponent from "../../components/Swiper";
 
 export default function Home() {
   return (
     <SafeAreaView style={styles.container}>
       <ScrollView style={styles.scrollView}>
-        <Image
-          source={require("../../assets/slider.jpg")}
-          style={styles.slider}
-        />
+        <SwiperComponent />
         <CustomText style={styles.text}>Слідкуй за знижками</CustomText>
-        <View style={styles.whiteContainer}>
+        <WhiteContainer styleContainer={{ marginTop: 18 }}>
           <View style={styles.greyCircle}>
             <SvgPercent />
           </View>
           <CustomText style={styles.cardText}>
             Отримати персональну знижку
           </CustomText>
-        </View>
+        </WhiteContainer>
         <View style={styles.wrap}>
-          <View style={styles.whiteContainer}>
+          <WhiteContainer styleContainer={{ flex: 1 }}>
             <View style={styles.greyCircle}>
               <SvgScreen />
             </View>
             <CustomText style={styles.cardText}>Придбати пальне</CustomText>
-          </View>
-          <View style={styles.whiteContainer}>
+          </WhiteContainer>
+          <WhiteContainer styleContainer={{ flex: 1 }}>
             <View style={styles.greyCircle}>
               <SvgFuel />
             </View>
             <CustomText style={styles.cardText}>Ціни на пальне</CustomText>
-          </View>
+          </WhiteContainer>
         </View>
         <CustomText style={styles.text}>Паливна картка</CustomText>
-        <View
-          style={{ ...styles.whiteContainer, justifyContent: "space-between" }}
-        >
+        <WhiteContainer styleContainer={{ marginTop: 18 }}>
           <View style={styles.greyCircle}>
             <SvgCard />
           </View>
@@ -57,7 +55,7 @@ export default function Home() {
             source={require("../../assets/barcode.jpg")}
             style={styles.barcode}
           />
-        </View>
+        </WhiteContainer>
         <CustomText style={styles.text}>Карта АЗК САН</CustomText>
         <MapComponent />
       </ScrollView>
@@ -116,6 +114,7 @@ const styles = StyleSheet.create({
   wrap: {
     flexDirection: "row",
     gap: 7,
+    marginTop: 18,
   },
   barcode: {
     marginLeft: 16,
