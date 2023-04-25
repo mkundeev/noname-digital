@@ -61,5 +61,6 @@ const styles = StyleSheet.create({
     height: 160,
     width: 331,
     overflow: "hidden",
+    alignSelf: "center",
   },
 });

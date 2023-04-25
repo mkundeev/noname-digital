@@ -1,4 +1,4 @@
-import { useState, useRef, useContext } from "react";
+import { useState, useContext } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 import {
   View,
@@ -37,25 +37,28 @@ export default function DateScreen({ navigation, route }: Props) {
   const [date, setDate] = useState(new Date());
   const [isChecked, setChecked] = useState(false);
   const [isOpen, setOpen] = useState(false);
-  const user = useRef(auth.currentUser);
   const { setUserId } = useContext(AuthContext);
 
   const handleSubmit = async () => {
-    if (user.current?.uid) {
+    const user = auth.currentUser;
+    if (user?.uid) {
       await setUserData(
-        user.current?.uid,
+        user?.uid,
         name,
         surname,
         date.toLocaleDateString("en-GB").replaceAll("/", ".")
       );
-      setUserId(user.current?.uid);
+      setUserId(user?.uid);
       navigation.navigate("HomeNav", { screen: "Home" });
     }
   };
+  const onClose = () => {
+    setOpen(false);
+  };
 
   const onConfirm = (date: Date) => {
+    onClose();
     setDate(date);
-    setOpen(false);
   };
 
   return (
@@ -121,7 +124,7 @@ export default function DateScreen({ navigation, route }: Props) {
           isVisible={isOpen}
           mode="date"
           onConfirm={onConfirm}
-          onCancel={() => setOpen(false)}
+          onCancel={onClose}
           date={date}
           maximumDate={new Date()}
         />
