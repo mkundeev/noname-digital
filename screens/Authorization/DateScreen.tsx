@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import CustomText from "../../components/CustomText";
 import CustomButton from "../../components/CustomButton";
+import WhiteContainer from "../../components/WhiteContainer";
 import { COLORS } from "../../theme";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import type { DrawerScreenProps } from "@react-navigation/drawer";
@@ -73,15 +74,19 @@ export default function DateScreen({ navigation, route }: Props) {
           <View style={styles.inputWrap}>
             <CustomText>Ваше ім’я</CustomText>
             <TouchableOpacity
-              style={styles.inputContainer}
               onPress={() => setOpen(!isOpen)}
               activeOpacity={1}
             >
-              <TextInput
-                style={styles.input}
-                value={date.toLocaleDateString("en-GB").replaceAll("/", ".")}
-                editable={false}
-              />
+              <WhiteContainer
+                styleContent={styles.inputContainer}
+                styleContainer={{ marginTop: 12, height: 44 }}
+              >
+                <TextInput
+                  style={styles.input}
+                  value={date.toLocaleDateString("en-GB").replaceAll("/", ".")}
+                  editable={false}
+                />
+              </WhiteContainer>
             </TouchableOpacity>
             <View style={styles.checkboxWrap}>
               <View
@@ -154,12 +159,9 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   inputContainer: {
-    marginTop: 12,
-    backgroundColor: COLORS.white,
     borderRadius: 15,
-    height: 44,
     paddingLeft: 13,
-    flexDirection: "row",
+    alignSelf: "flex-start",
   },
   input: {
     color: COLORS.text,

@@ -13,6 +13,7 @@ import {
 } from "react-native";
 import CustomText from "../../components/CustomText";
 import CustomButton from "../../components/CustomButton";
+import WhiteContainer from "../../components/WhiteContainer";
 import { COLORS } from "../../theme";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { AuthStackParamList } from "../../types/root.types";
@@ -69,7 +70,10 @@ export default function ConfirmPhoneScreen({ navigation, route }: Props) {
             <CustomText style={styles.text}>процес реєстраціЇ</CustomText>
             <View style={styles.inputWrap}>
               <CustomText>Ваш номер телефону</CustomText>
-              <View style={styles.inputContainer}>
+              <WhiteContainer
+                styleContent={styles.inputContainer}
+                styleContainer={{ marginTop: 12, height: 44 }}
+              >
                 <View style={styles.flag}>
                   <Image
                     source={require("../../assets/flag.png")}
@@ -92,7 +96,7 @@ export default function ConfirmPhoneScreen({ navigation, route }: Props) {
                 >
                   <Octicons name="pencil" size={10} color={COLORS.white} />
                 </TouchableOpacity>
-              </View>
+              </WhiteContainer>
               <CustomText style={{ marginTop: 24 }}>
                 Введіть код з SMS
               </CustomText>
@@ -160,14 +164,9 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   inputContainer: {
-    marginTop: 12,
-    backgroundColor: COLORS.white,
-    borderRadius: 15,
-    height: 44,
     paddingLeft: 45,
     position: "relative",
     flexDirection: "row",
-    flex: 0,
   },
   inputSMSContainer: {
     backgroundColor: COLORS.white,

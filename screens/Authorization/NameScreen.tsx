@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import CustomText from "../../components/CustomText";
 import CustomButton from "../../components/CustomButton";
+import WhiteContainer from "../../components/WhiteContainer";
 import { COLORS } from "../../theme";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { AuthStackParamList } from "../../types/root.types";
@@ -32,7 +33,10 @@ export default function NameScreen({ navigation }: Props) {
             <CustomText style={styles.text}>процес реєстраціЇ</CustomText>
             <View style={styles.inputWrap}>
               <CustomText>Ваше ім’я</CustomText>
-              <View style={styles.inputContainer}>
+              <WhiteContainer
+                styleContent={styles.inputContainer}
+                styleContainer={{ marginTop: 12, height: 44 }}
+              >
                 <TextInput
                   style={styles.input}
                   autoFocus
@@ -41,9 +45,12 @@ export default function NameScreen({ navigation }: Props) {
                   onChangeText={setName}
                   cursorColor={COLORS.text}
                 />
-              </View>
+              </WhiteContainer>
               <CustomText style={{ marginTop: 24 }}>Ваше прізвище</CustomText>
-              <View style={styles.inputContainer}>
+              <WhiteContainer
+                styleContent={styles.inputContainer}
+                styleContainer={{ marginTop: 12, height: 44 }}
+              >
                 <TextInput
                   style={styles.input}
                   inputMode="text"
@@ -51,7 +58,7 @@ export default function NameScreen({ navigation }: Props) {
                   onChangeText={setSurname}
                   cursorColor={COLORS.text}
                 />
-              </View>
+              </WhiteContainer>
             </View>
           </View>
           <CustomButton
@@ -87,10 +94,6 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   inputContainer: {
-    marginTop: 12,
-    backgroundColor: COLORS.white,
-    borderRadius: 15,
-    height: 44,
     paddingLeft: 13,
     flexDirection: "row",
   },

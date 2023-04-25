@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   btn: {
     marginTop: 32,
     borderRadius: 15,
-    height: 58,
+    height: 44,
     alignItems: "center",
     flexDirection: "row",
   },

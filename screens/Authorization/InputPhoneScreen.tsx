@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import CustomText from "../../components/CustomText";
 import CustomButton from "../../components/CustomButton";
+import WhiteContainer from "../../components/WhiteContainer";
 import { COLORS } from "../../theme";
 import { AntDesign } from "@expo/vector-icons";
 import type { NativeStackScreenProps } from "@react-navigation/native-stack";
@@ -67,7 +68,10 @@ export default function InputPhoneScreen({ navigation }: Props) {
           <CustomText style={styles.text}>процес реєстраціЇ</CustomText>
           <View style={styles.inputWrap}>
             <CustomText>Введіть Ваш номер телефону</CustomText>
-            <View style={styles.inputContainer}>
+            <WhiteContainer
+              styleContainer={{ marginTop: 12, height: 44 }}
+              styleContent={styles.inputContainer}
+            >
               <View style={styles.flag}>
                 <Image
                   source={require("../../assets/flag.png")}
@@ -92,7 +96,7 @@ export default function InputPhoneScreen({ navigation }: Props) {
               >
                 <AntDesign name="closecircle" size={16} color={COLORS.accent} />
               </TouchableOpacity>
-            </View>
+            </WhiteContainer>
           </View>
         </View>
         <KeyboardAvoidingView
@@ -130,10 +134,6 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   inputContainer: {
-    marginTop: 12,
-    backgroundColor: COLORS.white,
-    borderRadius: 15,
-    height: 44,
     paddingLeft: 45,
     position: "relative",
     flexDirection: "row",

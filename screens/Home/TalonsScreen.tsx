@@ -30,6 +30,7 @@ export default function TalonsScreen({ navigation }: Props) {
             Зареєструйстесь для створення власного кабінету
           </CustomText>
           <CustomButton
+            styleBtn={{ height: 58 }}
             onPress={() => {
               navigation.navigate("AuthNav", { screen: "InputPhoneScreen" });
             }}
