@@ -27,7 +27,6 @@ const styles = StyleSheet.create({
     height: 118,
     borderColor: "#FCFFFE",
     borderWidth: 1,
-    position: "relative",
     borderRadius: 16,
   },
 });

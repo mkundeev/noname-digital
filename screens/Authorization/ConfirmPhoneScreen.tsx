@@ -38,7 +38,9 @@ export default function ConfirmPhoneScreen({ navigation, route }: Props) {
   const ref = useRef<TextInput>(null);
 
   useEffect(() => {
-    if (ref.current) ref.current.focus();
+    setTimeout(() => {
+      if (ref.current) ref.current.focus();
+    }, 100);
   }, []);
 
   const handleChange = (value: string) => {
@@ -48,8 +50,10 @@ export default function ConfirmPhoneScreen({ navigation, route }: Props) {
   };
 
   const handleSubmit = async () => {
+    Keyboard.dismiss();
     try {
       await verifyCode(route.params.userId, value);
+
       navigation.navigate("NameScreen");
     } catch (err) {
       setIsValid(false);
@@ -59,9 +63,7 @@ export default function ConfirmPhoneScreen({ navigation, route }: Props) {
   return (
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
-        <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "position" : "padding"}
-        >
+        <KeyboardAvoidingView behavior="position">
           <View style={styles.topWrap}>
             <Image
               source={require("../../assets/logoX.png")}

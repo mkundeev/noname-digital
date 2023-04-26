@@ -142,7 +142,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingTop: 76,
     paddingHorizontal: 32,
-    justifyContent: "space-between",
     paddingBottom: 18,
   },
   text: {
@@ -169,6 +168,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   btn: {
+    marginTop: 105,
     height: 44,
   },
   btnText: {
